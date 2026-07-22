@@ -5,8 +5,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="mt-12 py-6 border-t border-slate-200 dark:border-gray-800/60 transition-all duration-300">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm font-semibold text-slate-500 dark:text-gray-400">
+    <footer className="mt-8 sm:mt-12 py-5 sm:py-6 border-t border-slate-200 dark:border-gray-800/60 transition-all duration-300">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4 text-center sm:text-left text-xs sm:text-sm font-medium text-slate-500 dark:text-gray-400">
         
         {/* Left: Copyright */}
         <div>
@@ -22,7 +22,7 @@ const Footer = () => {
             href="http://chaitalimore.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-800 hover:text-teal-600 transition-colors underline decoration-2 decoration-slate-400/30 hover:decoration-teal-500/50"
+            className="font-semibold text-slate-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400 transition-colors underline decoration-2 decoration-slate-400/30 hover:decoration-teal-500/50"
           >
             Chaitali More
           </a>

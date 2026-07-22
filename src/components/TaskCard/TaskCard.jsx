@@ -1,31 +1,46 @@
-import React, { useId } from 'react'
-import { FiCalendar, FiClock, FiEdit3, FiTrash2 } from 'react-icons/fi'
+import React, { useId } from "react";
+import { FiCalendar, FiClock, FiEdit3, FiTrash2 } from "react-icons/fi";
 
-const TaskCard = ({ task,deleteTask,toggleCheckbox }) => {
-  const { title, createdAt, completed,id } = task;
+const TaskCard = ({ task, deleteTask, toggleCheckbox, editTask }) => {
+  const { title, createdAt, completed, id } = task;
   const idCard = useId();
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    try {
+      return new Date(dateStr).toLocaleString(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    } catch {
+      return dateStr;
+    }
+  };
+
   return (
-    <div className="group rounded-2xl bg-white/90 p-4 sm:p-5 shadow-lg shadow-teal-900/5 backdrop-blur-xl border border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 hover:shadow-xl hover:border-teal-500/30 transition-all duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        
+    <div
+      className={`group rounded-2xl bg-white/90 p-4 sm:p-5 shadow-md shadow-teal-900/5 backdrop-blur-xl border border-l-4 border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 hover:shadow-xl transition-all duration-300 ${
+        completed ? "border-l-emerald-500" : "border-l-amber-500"
+      }`}
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         {/* Checkbox & Title */}
-        <div className="flex items-center gap-3.5 flex-1 min-w-0">
+        <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
           <input
             type="checkbox"
             id={idCard}
             defaultChecked={completed}
-            onChange={(e)=>{
-              toggleCheckbox(id,e.target.checked)
+            onChange={(e) => {
+              toggleCheckbox(id, e.target.checked);
             }}
-            className="h-5 w-5 rounded-md border-slate-300 dark:border-gray-600 text-teal-600 focus:ring-teal-500/20 accent-teal-600 cursor-pointer transition-transform active:scale-95 shrink-0"
+            className="mt-1 sm:mt-0 h-5 w-5 rounded-md border-slate-300 dark:border-gray-600 text-teal-600 focus:ring-teal-500/20 accent-teal-600 cursor-pointer transition-transform active:scale-95 shrink-0"
           />
           <label
             htmlFor={idCard}
-            className={`text-lg font-semibold cursor-pointer select-none transition-colors duration-200 break-words ${
+            className={`text-sm sm:text-base font-semibold cursor-pointer select-none transition-colors duration-200 break-all sm:break-words ${
               completed
-                ? 'line-through text-slate-400 dark:text-gray-500'
-                : 'text-slate-800 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400'
+                ? "line-through text-slate-400 dark:text-gray-500"
+                : "text-slate-800 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400"
             }`}
           >
             {title}
@@ -33,22 +48,27 @@ const TaskCard = ({ task,deleteTask,toggleCheckbox }) => {
         </div>
 
         {/* Status Badge & Actions */}
-        <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-auto flex-wrap sm:flex-nowrap">
+        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-gray-800">
           <span
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
               completed
-                ? 'bg-emerald-100/80 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
-                : 'bg-amber-100/80 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
+                ? "bg-emerald-100/80 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                : "bg-amber-100/80 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
             }`}
           >
-            <span className={`h-1.5 w-1.5 rounded-full ${completed ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`} />
-            Status : {completed ? "Completed" : "Pending"}
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${completed ? "bg-emerald-500" : "bg-amber-500 animate-pulse"}`}
+            />
+            {completed ? "Completed" : "Pending"}
           </span>
 
           <div className="flex items-center gap-1.5">
             <button
               type="button"
-              className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg text-slate-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/50 border border-slate-200/80 dark:border-gray-700/80 transition-all cursor-pointer"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/50 border border-slate-200/80 dark:border-gray-700/80 transition-all cursor-pointer"
+              onClick={() => {
+                editTask(task);
+              }}
             >
               <FiEdit3 className="h-3.5 w-3.5" />
               <span>Edit</span>
@@ -56,29 +76,27 @@ const TaskCard = ({ task,deleteTask,toggleCheckbox }) => {
 
             <button
               type="button"
-              className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg text-slate-600 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 border border-slate-200/80 dark:border-gray-700/80 transition-all cursor-pointer"
-              onClick={()=>{
-                console.log(id);
-                
-                deleteTask(id)}}
-           >
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg text-slate-600 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 border border-slate-200/80 dark:border-gray-700/80 transition-all cursor-pointer"
+              onClick={() => {
+                deleteTask(id);
+              }}
+            >
               <FiTrash2 className="h-3.5 w-3.5" />
               <span>Delete</span>
             </button>
           </div>
         </div>
-
       </div>
 
       {/* Date info */}
       {createdAt && (
-        <div className="mt-3 pt-3 border-t border-slate-100 dark:border-gray-800/80 flex items-center text-xs font-medium text-slate-500 dark:text-gray-400 gap-1.5">
+        <div className="mt-2.5 pt-2.5 border-t border-slate-100 dark:border-gray-800/80 flex items-center text-[11px] sm:text-xs font-medium text-slate-400 dark:text-gray-500 gap-1.5">
           <FiCalendar className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
-          <span>Created At: {createdAt}</span>
+          <span>Created: {formatDate(createdAt)}</span>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default TaskCard
+export default TaskCard;
