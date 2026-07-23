@@ -1,7 +1,19 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { FiCheckSquare, FiMoon, FiSun } from "react-icons/fi";
 
-const Header = ({ darkMode, toggleDarkMode }) => {
+const Header = ({ darkMode, setDarkMode }) => {
+  const handleDarkMode = () =>{
+  setDarkMode((prev) => !prev);
+  }
+
+  useEffect(() => {
+  if (darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [darkMode]);
+
   return (
     <header className="mb-4 sm:mb-6 rounded-2xl bg-white/90 p-3.5 sm:p-5 shadow-lg shadow-teal-900/5 backdrop-blur-xl border border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 dark:shadow-none transition-all duration-300">
       {/* Top Bar: Brand Icon + Title + Action Button */}
@@ -19,9 +31,9 @@ const Header = ({ darkMode, toggleDarkMode }) => {
         {/* Action Controls */}
         <button
           type="button"
-          onClick={toggleDarkMode}
           className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold text-white shadow-md shadow-slate-900/10 transition-all duration-300 hover:bg-slate-800 active:scale-95 dark:bg-teal-600 dark:hover:bg-teal-500 cursor-pointer shrink-0"
           aria-label="Toggle dark mode"
+          onClick={() => handleDarkMode()}
         >
           {darkMode ? (
             <>

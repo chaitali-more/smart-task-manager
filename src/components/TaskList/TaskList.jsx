@@ -2,7 +2,7 @@ import React from 'react'
 import TaskCard from '../TaskCard/TaskCard'
 import { FiInbox } from 'react-icons/fi'
 
-const TaskList = ({ tasks = [], deleteTask, toggleCheckbox, editTask }) => {
+const TaskList = ({ tasks = [], }) => {
   if (!tasks || tasks.length === 0) {
     return (
       <div className="my-6 rounded-2xl bg-white/90 p-8 sm:p-12 text-center shadow-lg shadow-teal-900/5 backdrop-blur-xl border border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 transition-all duration-300">
@@ -30,9 +30,6 @@ const TaskList = ({ tasks = [], deleteTask, toggleCheckbox, editTask }) => {
         <TaskCard
           key={task.id || index}
           task={task}
-          deleteTask={deleteTask}
-          toggleCheckbox={toggleCheckbox}
-          editTask={editTask}
         />
       ))}
     </div>

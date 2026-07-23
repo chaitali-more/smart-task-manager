@@ -1,7 +1,9 @@
 import React, { useId } from "react";
 import { FiCalendar, FiClock, FiEdit3, FiTrash2 } from "react-icons/fi";
+import {  useTaskDetails } from "../../context/TaskContext";
 
-const TaskCard = ({ task, deleteTask, toggleCheckbox, editTask }) => {
+const TaskCard = ({ task }) => {
+  const {editTask,toggleCheckbox,deleteTask} = useTaskDetails();
   const { title, createdAt, completed, id } = task;
   const idCard = useId();
 
@@ -20,7 +22,7 @@ const TaskCard = ({ task, deleteTask, toggleCheckbox, editTask }) => {
   return (
     <div
       className={`group rounded-2xl bg-white/90 p-4 sm:p-5 shadow-md shadow-teal-900/5 backdrop-blur-xl border border-l-4 border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 hover:shadow-xl transition-all duration-300 ${
-        completed ? "border-l-emerald-500" : "border-l-amber-500"
+        completed ? "border-l-emerald-500" : "border-l-amber-500 "
       }`}
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">

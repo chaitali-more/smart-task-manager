@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiPlusCircle, FiList, FiXCircle } from "react-icons/fi";
+import {  useTaskDetails } from "../../context/TaskContext";
 
-const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
+const TaskForm = ({  editingTask, setEditingTask }) => {
+  const {tasks, setTasks} = useTaskDetails();
   const [taskvalue, setTaskValue] = useState("");
   const [error, setError] = useState(false);
   const inputRef = useRef(null);
@@ -15,6 +17,7 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
 
   const addTask = (e) => {
     e.preventDefault();
+    inputRef.current?.focus();
     if (!taskvalue.trim()) {
       setError(true);
       return;
